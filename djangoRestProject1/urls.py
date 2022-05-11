@@ -19,7 +19,7 @@ from rest_framework.routers import DefaultRouter
 from mainapp.views import AuthorModelViewSet
 
 router = DefaultRouter()
-router.register('authors', AuthorModelViewSet)
+router.register('users', AuthorModelViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
