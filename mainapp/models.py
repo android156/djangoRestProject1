@@ -4,7 +4,7 @@ from uuid import uuid4
 # Create your models here.
 
 
-class User(models.Model):
+class AppUser(models.Model):
     CATEGORY_CHOICES = (
         ('A', 'Администратор'),
         ('M', 'Менеджер проекта'),
