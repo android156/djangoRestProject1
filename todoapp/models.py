@@ -10,7 +10,7 @@ class Project(models.Model):
     name = models.CharField(max_length=64)
     description = models.TextField(blank=True)
     link = models.URLField(blank=True)
-    users = models.ManyToManyField(AppUser, )
+    users = models.ManyToManyField(AppUser, blank=True)
 
     def __str__(self):
         return f'{self.name} - {self.description}'
@@ -21,9 +21,9 @@ class ToDo(models.Model):
     user = models.ForeignKey(AppUser, db_index=True, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, db_index=True, on_delete=models.CASCADE)
     text = models.TextField(blank=True)
-    created = models.DateTimeField(verbose_name='создан', auto_now_add=True)
-    updated = models.DateTimeField(verbose_name='обновлен', auto_now=True)
-    is_active = models.BooleanField(default=True)
+    created = models.DateTimeField(verbose_name='Задание создано', auto_now_add=True)
+    updated = models.DateTimeField(verbose_name='Задание обновлено', auto_now=True)
+    is_active = models.BooleanField(verbose_name='Задание активно', default=True)
 
     def __str__(self):
         return f'{self.text} - Ответственный {self.user.user_name}, Проект {self.project.name}'
