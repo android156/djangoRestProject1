@@ -23,7 +23,7 @@ class ToDo(models.Model):
     text = models.TextField(blank=True)
     created = models.DateTimeField(verbose_name='создан', auto_now_add=True)
     updated = models.DateTimeField(verbose_name='обновлен', auto_now=True)
-    is_active = models.BooleanField()
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return f'{self.text} - Ответственный {self.user.user_name}, Проект {self.project.name}'

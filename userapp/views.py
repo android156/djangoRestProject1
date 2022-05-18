@@ -10,7 +10,8 @@ data = {
     'users': []
 }
 
-class AuthorModelViewSet(ModelViewSet):
+
+class AppUserModelViewSet(ModelViewSet):
     queryset = AppUser.objects.all()
     serializer_class = UserModelSerializer
 
