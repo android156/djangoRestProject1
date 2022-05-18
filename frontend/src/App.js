@@ -3,13 +3,18 @@ import './App.css';
 import React from 'react';
 import UserList from './components/User.js'
 import axios from 'axios'
+import ProjectList from "./components/Project";
+import TodoList from "./components/todos";
 
 
 class App extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            'users': []
+            'users': [],
+            'projects': [],
+            'todos': [],
+
         }
     }
 
@@ -47,12 +52,32 @@ class App extends React.Component {
                     }
                 )
             }).catch(error => console.log(error))
+        axios.get('http://127.0.0.1:8000/api/projects/')
+            .then(response => {
+                const projects = response.data
+                this.setState(
+                    {
+                        'projects': projects
+                    }
+                )
+            }).catch(error => console.log(error))
+        axios.get('http://127.0.0.1:8000/api/todo/')
+            .then(response => {
+                const todos = response.data
+                this.setState(
+                    {
+                        'todos': todos
+                    }
+                )
+            }).catch(error => console.log(error))
     }
 
     render() {
         return (
             <div>
-                <UserList users={this.state.users}/>
+                <div><UserList users={this.state.users}/></div>
+                <div><ProjectList projects={this.state.projects}/></div>
+                <div><TodoList todos={this.state.todos}/></div>
             </div>
         )
     }
