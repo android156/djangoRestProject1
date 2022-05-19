@@ -1,0 +1,20 @@
+[
+    {
+        "url": "http://127.0.0.1:8000/api/todo/d1f16fb7-5fd6-4ea4-ba57-a9bc8973de47/",
+        "text": "Отстроить кремль",
+        "created": "2022-05-18T09:58:13.862137Z",
+        "updated": "2022-05-18T09:58:13.862137Z",
+        "is_active": true,
+        "user": "http://127.0.0.1:8000/api/users/e21cfac3-2ad2-43a3-a5d9-08ebac83a044/",
+        "project": "http://127.0.0.1:8000/api/projects/b29a94f7-8804-4f37-9fbd-f8fb02ffaf02/"
+    },
+    {
+        "url": "http://127.0.0.1:8000/api/todo/e0c80be7-5599-4841-86b7-ea30c5ced6e1/",
+        "text": "Ваня, тебе выносить мусор еженедельно на территорию соседнего офиса",
+        "created": "2022-05-18T10:06:57.078212Z",
+        "updated": "2022-05-18T10:06:57.078212Z",
+        "is_active": true,
+        "user": "http://127.0.0.1:8000/api/users/268e1d5c-2fb4-474f-b25c-0254cf9d09c4/",
+        "project": "http://127.0.0.1:8000/api/projects/b9858921-e5ba-4784-91d3-5f6c4f1bafa9/"
+    }
+]

@@ -1,0 +1,27 @@
+[
+    {
+        "url": "http://127.0.0.1:8000/api/projects/b29a94f7-8804-4f37-9fbd-f8fb02ffaf02/",
+        "name": "Основание Москвы",
+        "description": "Нужно основать первопрестольную.",
+        "link": "http://moscow.ru",
+        "users": [
+            "http://127.0.0.1:8000/api/users/33f77a05-4731-482e-80f4-ad64dbd0f0c9/"
+        ]
+    },
+    {
+        "url": "http://127.0.0.1:8000/api/projects/cb102b3a-c2ec-47f3-9d0e-9d63134b3a1c/",
+        "name": "Основать СПб",
+        "description": "Северную столицу основать",
+        "link": "http://spb.ru",
+        "users": [
+            "http://127.0.0.1:8000/api/users/e21cfac3-2ad2-43a3-a5d9-08ebac83a044/"
+        ]
+    },
+    {
+        "url": "http://127.0.0.1:8000/api/projects/b9858921-e5ba-4784-91d3-5f6c4f1bafa9/",
+        "name": "Вывоз мусора 2022",
+        "description": "Организовать вывоз мусора в 2022г на регулярной основе еженедельно",
+        "link": "",
+        "users": []
+    }
+]

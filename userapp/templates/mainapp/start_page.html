@@ -1,0 +1,33 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'userapp/css/style_main.css' %}">
+    {#  Ссылку на css-стиль можно упаковать в блок и тогда для каждого html шаблона можно будет подключать свой css  #}
+    {% block css_additional%}
+    {% endblock %}
+    <title>{{ title }}</title>
+</head>
+<body>
+    <div class="wrapper">
+      <div class="top">
+        <div class="header">
+            {% include 'includes/menu.html' %}
+        </div>
+        <div class="content">
+            <h1>{{ h1|safe }}</h1>
+            {% block content %}
+            {% endblock %}
+        </div>
+      </div>
+      <div class="footer">
+          {% include 'includes/menu.html' %}
+      </div>
+    </div>
+
+
+
+</body>
+</html>
