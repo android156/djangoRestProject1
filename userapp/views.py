@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
 from .models import AppUser
-from .serializers import UserModelSerializer
+from .serializers import UserModelSerializerAll
 
 
 data = {
@@ -13,7 +13,7 @@ data = {
 
 class AppUserModelViewSet(ModelViewSet):
     queryset = AppUser.objects.all()
-    serializer_class = UserModelSerializer
+    serializer_class = UserModelSerializerAll
 
 
 def start_page(request):

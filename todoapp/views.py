@@ -3,12 +3,12 @@ from django.shortcuts import render
 # Create your views here.
 from rest_framework.viewsets import ModelViewSet
 from todoapp.models import Project, ToDo
-from todoapp.serializers import ProjectModelSerializer, ToDoModelSerializer
+from todoapp.serializers import ProjectModelSerializerAll, ToDoModelSerializer
 
 
 class ProjectModelViewSet(ModelViewSet):
     queryset = Project.objects.all()
-    serializer_class = ProjectModelSerializer
+    serializer_class = ProjectModelSerializerAll
 
 
 class ToDoModelViewSet(ModelViewSet):
