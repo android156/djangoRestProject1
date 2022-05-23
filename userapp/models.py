@@ -6,6 +6,9 @@ from uuid import uuid4
 
 
 class AppUser(models.Model):
+    class Meta:
+        ordering = ['user_name']
+
     ADMIN_STATUS = 'A'
     MANAGER_STATUS = 'M'
     DEVELOPER_STATUS = 'D'

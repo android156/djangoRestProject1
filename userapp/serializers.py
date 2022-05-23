@@ -20,3 +20,5 @@ class UserModelSerializerForProject(HyperlinkedModelSerializer):
         model = AppUser
         # fields = '__all__'
         fields = ['user_name']
+
+
