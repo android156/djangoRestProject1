@@ -1,4 +1,4 @@
-from rest_framework.serializers import HyperlinkedModelSerializer
+from rest_framework.serializers import HyperlinkedModelSerializer, ModelSerializer
 
 from userapp.serializers import UserModelSerializerForToDo, UserModelSerializerForProject
 from .models import Project, ToDo
@@ -21,6 +21,15 @@ class ProjectModelSerializerForToDo(HyperlinkedModelSerializer):
 
 
 class ToDoModelSerializer(HyperlinkedModelSerializer):
+    user = UserModelSerializerForToDo()
+    project = ProjectModelSerializerForToDo()
+
+    class Meta:
+        model = ToDo
+        fields = '__all__'
+
+
+class ToDoModelSerializerForApiView(ModelSerializer):
     user = UserModelSerializerForToDo()
     project = ProjectModelSerializerForToDo()
 
