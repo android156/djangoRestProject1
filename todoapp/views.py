@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from rest_framework.generics import CreateAPIView
+from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -37,3 +38,13 @@ class ArticleCreateAPIView(CreateAPIView):
     renderer_classes = [JSONRenderer]
     queryset = Project.objects.all()
     serializer_class = ProjectModelSerializerAll
+
+
+class ProjectLimitOffsetPagination(LimitOffsetPagination):
+    default_limit = 1
+
+
+class ProjectLimitOffsetPaginationViewSet(ModelViewSet):
+    queryset = Project.objects.all()
+    serializer_class = ProjectModelSerializerAll
+    pagination_class = ProjectLimitOffsetPagination
