@@ -15,3 +15,4 @@ class ToDoFilter(filters.FilterSet):
         model = ToDo
         fields = ['user', 'is_active', 'text']
     text = filters.CharFilter(lookup_expr='contains')
+    is_active = filters.BooleanFilter()

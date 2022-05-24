@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
+from rest_framework import status
 from rest_framework.generics import CreateAPIView
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.renderers import JSONRenderer
@@ -22,11 +23,27 @@ class ProjectModelViewSet(ModelViewSet):
     serializer_class = ProjectModelSerializerAll
 
 
+
 class ToDoModelViewSet(ModelViewSet):
     queryset = ToDo.objects.all()
     serializer_class = ToDoModelSerializer
     filterset_class = ToDoFilter
     pagination_class = ToDoLimitOffsetPagination
+
+    # Переопределили удаление.
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
+    def perform_destroy(self, instance):
+        instance.is_active = False
+        instance.save()
+
+
 
 
 class MyApiView(APIView):
