@@ -8,9 +8,13 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
-from todoapp.filters import ProjectFilter
+from todoapp.filters import ProjectFilter, ToDoFilter
 from todoapp.models import Project, ToDo
 from todoapp.serializers import ProjectModelSerializerAll, ToDoModelSerializer, ToDoModelSerializerForApiView
+
+
+class ToDoLimitOffsetPagination(LimitOffsetPagination):
+    default_limit = 20
 
 
 class ProjectModelViewSet(ModelViewSet):
@@ -21,6 +25,8 @@ class ProjectModelViewSet(ModelViewSet):
 class ToDoModelViewSet(ModelViewSet):
     queryset = ToDo.objects.all()
     serializer_class = ToDoModelSerializer
+    filterset_class = ToDoFilter
+    pagination_class = ToDoLimitOffsetPagination
 
 
 class MyApiView(APIView):
@@ -36,7 +42,7 @@ class MyApiView(APIView):
         return Response('POST SUCCESS')
 
 
-class ArticleCreateAPIView(CreateAPIView):
+class ProjectCreateAPIView(CreateAPIView):
     renderer_classes = [JSONRenderer]
     queryset = Project.objects.all()
     serializer_class = ProjectModelSerializerAll
@@ -51,4 +57,4 @@ class ProjectLimitOffsetPaginationViewSet(ModelViewSet):
     serializer_class = ProjectModelSerializerAll
     pagination_class = ProjectLimitOffsetPagination
     filterset_class = ProjectFilter
-    filterset_fields = ['name', 'description']
+

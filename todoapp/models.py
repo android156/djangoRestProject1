@@ -17,6 +17,9 @@ class Project(models.Model):
 
 
 class ToDo(models.Model):
+    class Meta:
+        ordering = ['-updated']
+
     uid = models.UUIDField(primary_key=True, default=uuid4)
     user = models.ForeignKey(AppUser, db_index=True, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, db_index=True, on_delete=models.CASCADE)
