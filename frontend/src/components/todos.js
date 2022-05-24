@@ -7,10 +7,10 @@ const TodoItem = ({todo}) => {
                 {todo.updated}
             </td>
             <td>
-                {todo.user}
+                {todo.user.user_name}
             </td>
             <td>
-                {todo.project}
+                {todo.project.description}
             </td>
             <td>
                 {todo.text}
@@ -22,19 +22,25 @@ const TodoItem = ({todo}) => {
 const TodoList = ({todos}) => {
     return (
         <table>
-            <th>
-                Date
-            </th>
-            <th>
-                User
-            </th>
-            <th>
-                Project
-            </th>
-            <th>
-                Text
-            </th>
-            {todos.map((todo) => <TodoItem todo={todo}/>)}
+            <thead>
+                <tr>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        User
+                    </th>
+                    <th>
+                        Project
+                    </th>
+                    <th>
+                        Text
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {todos.map((todo) => <TodoItem todo={todo} key={todo.uid}/>)}
+            </tbody>
         </table>
     )
 }

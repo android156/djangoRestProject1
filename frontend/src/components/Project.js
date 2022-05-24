@@ -1,5 +1,8 @@
 import React from 'react'
 
+
+
+
 const ProjectItem = ({project}) => {
     return (
         <tr>
@@ -12,9 +15,6 @@ const ProjectItem = ({project}) => {
             <td>
                 {project.link}
             </td>
-            <td>
-                {project.users}
-            </td>
         </tr>
     )
 }
@@ -22,19 +22,22 @@ const ProjectItem = ({project}) => {
 const ProjectList = ({projects}) => {
     return (
         <table>
-            <th>
-                Name
-            </th>
-            <th>
-                Description
-            </th>
-            <th>
-                URL
-            </th>
-            <th>
-                User list
-            </th>
-            {projects.map((project) => <ProjectItem project={project}/>)}
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        URL
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {projects.map((project) => <ProjectItem project={project} key={project.uid}/>)}
+            </tbody>
         </table>
     )
 }

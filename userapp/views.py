@@ -13,7 +13,7 @@ data = {
 
 
 class AppUserModelViewSet(ModelViewSet):
-    renderer_classes = [JSONRenderer, ]
+
     queryset = AppUser.objects.all()
     serializer_class = UserModelSerializerAll
 
