@@ -13,6 +13,7 @@ class ProjectFilter(filters.FilterSet):
 class ToDoFilter(filters.FilterSet):
     class Meta:
         model = ToDo
-        fields = ['user', 'is_active', 'text']
+        fields = ['user', 'is_active', 'text', 'created']
     text = filters.CharFilter(lookup_expr='contains')
     is_active = filters.BooleanFilter()
+    created = filters.DateTimeFromToRangeFilter()
