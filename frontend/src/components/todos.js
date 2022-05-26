@@ -7,14 +7,15 @@ const TodoItem = ({todo}) => {
                 {todo.updated}
             </td>
             <td>
-                {todo.user.user_name}
+                {todo.text}
+            </td>
+            <td>
+                {todo.user.first_name} {todo.user.last_name}
             </td>
             <td>
                 {todo.project.description}
             </td>
-            <td>
-                {todo.text}
-            </td>
+
         </tr>
     )
 }
@@ -22,19 +23,20 @@ const TodoItem = ({todo}) => {
 const TodoList = ({todos}) => {
     return (
         <table>
+            <caption>Задания</caption>
             <thead>
                 <tr>
                     <th>
-                        Date
+                        Дата изменений
                     </th>
                     <th>
-                        User
+                        Задание
                     </th>
                     <th>
-                        Project
+                        Исполнитель
                     </th>
                     <th>
-                        Text
+                        Проект
                     </th>
                 </tr>
             </thead>

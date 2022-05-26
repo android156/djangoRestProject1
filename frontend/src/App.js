@@ -5,7 +5,15 @@ import UserList from './components/User.js'
 import axios from 'axios'
 import ProjectList from "./components/Project";
 import TodoList from "./components/todos";
+import {BrowserRouter, Route, Routes, Link} from "react-router-dom";
 
+const NotFound404 = () => {
+    return (
+        <div>
+            <h1>Страница не найдена</h1>
+        </div>
+    )
+}
 
 class App extends React.Component {
     constructor(props) {
@@ -17,6 +25,7 @@ class App extends React.Component {
 
         }
     }
+
 
     // Заглушка, которая юзеров грузит из списка
 
@@ -74,10 +83,28 @@ class App extends React.Component {
 
     render() {
         return (
-            <div>
-                <div><UserList users={this.state.users}/></div>
-                <div><ProjectList projects={this.state.projects}/></div>
-                <div><TodoList todos={this.state.todos}/></div>
+            <div className="App">
+                <BrowserRouter>
+                    <nav>
+                        <ul>
+                            <li>
+                                <Link to='/'>Задания</Link>
+                            </li>
+                            <li>
+                                <Link to='/users'>Пользователи</Link>
+                            </li>
+                            <li>
+                                <Link to='/projects'>Проекты</Link>
+                            </li>
+                        </ul>
+                    </nav>
+                    <Routes>
+                        <Route path='*' element={<NotFound404/>}/>
+                        <Route path='/' element={<TodoList todos={this.state.todos}/>}/>
+                        <Route path='/users' element={<UserList users={this.state.users}/>}/>
+                        <Route path='/projects' element={<ProjectList projects={this.state.projects}/>}/>
+                    </Routes>
+                </BrowserRouter>
             </div>
         )
     }

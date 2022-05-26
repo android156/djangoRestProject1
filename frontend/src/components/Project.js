@@ -1,6 +1,5 @@
 import React from 'react'
-
-
+import {generateUniqueID} from "web-vitals/dist/modules/lib/generateUniqueID";
 
 
 const ProjectItem = ({project}) => {
@@ -13,6 +12,9 @@ const ProjectItem = ({project}) => {
                 {project.description}
             </td>
             <td>
+                {project.users.map(user => <div key={generateUniqueID()}>{user.user_name}</div>)}
+            </td>
+            <td>
                 {project.link}
             </td>
         </tr>
@@ -22,13 +24,17 @@ const ProjectItem = ({project}) => {
 const ProjectList = ({projects}) => {
     return (
         <table>
+            <caption>Проекты</caption>
             <thead>
                 <tr>
                     <th>
-                        Name
+                        Название проекта
                     </th>
                     <th>
-                        Description
+                        Описание
+                    </th>
+                    <th>
+                        Участники
                     </th>
                     <th>
                         URL

@@ -25,22 +25,23 @@ const UserItem = ({user}) => {
 const UserList = ({users}) => {
     return (
         <table>
+            <caption>Пользователи</caption>
             <thead>
                 <tr>
                     <th>
-                        First name
+                        Имя
                     </th>
                     <th>
-                        Last Name
+                        Фамилия
                     </th>
                     <th>
-                        Username
+                        Аккаунт
                     </th>
                     <th>
-                        E-mail
+                        Пошта
                     </th>
                     <th>
-                        Категория пользователя
+                        Статус
                     </th>
                 </tr>
             </thead>

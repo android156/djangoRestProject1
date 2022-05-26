@@ -4,13 +4,12 @@ from userapp.serializers import UserModelSerializerForToDo, UserModelSerializerF
 from .models import Project, ToDo
 
 
-class ProjectModelSerializerAll(HyperlinkedModelSerializer):
+class ProjectModelSerializerAll(ModelSerializer):
     users = UserModelSerializerForProject(many=True)
 
     class Meta:
         model = Project
-        # fields = '__all__'
-        exclude = ['url']
+        fields = '__all__'
 
 
 class ProjectModelSerializerForToDo(HyperlinkedModelSerializer):
@@ -20,7 +19,7 @@ class ProjectModelSerializerForToDo(HyperlinkedModelSerializer):
         exclude = ['url', 'link', 'users']
 
 
-class ToDoModelSerializer(HyperlinkedModelSerializer):
+class ToDoModelSerializer(ModelSerializer):
     user = UserModelSerializerForToDo()
     project = ProjectModelSerializerForToDo()
 
