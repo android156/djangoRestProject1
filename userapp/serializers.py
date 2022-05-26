@@ -19,6 +19,6 @@ class UserModelSerializerForProject(HyperlinkedModelSerializer):
     class Meta:
         model = AppUser
         # fields = '__all__'
-        fields = ['user_name']
+        fields = ['user_name', 'uid']
 
 

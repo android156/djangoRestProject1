@@ -1,8 +1,16 @@
 import React from 'react'
-import {generateUniqueID} from "web-vitals/dist/modules/lib/generateUniqueID";
+import { useParams } from 'react-router-dom'
 
+function contains(arr, elem) {
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === elem) {
+            return true;
+        }
+    }
+    return false;
+}
 
-const ProjectItem = ({project}) => {
+const UserProjectItem = ({project}) => {
     return (
         <tr>
             <td>
@@ -12,20 +20,22 @@ const ProjectItem = ({project}) => {
                 {project.description}
             </td>
             <td>
-                {project.users.map(user => <div key={generateUniqueID()}>{user.user_name}</div>)}
-            </td>
-            <td>
                 {project.link}
             </td>
         </tr>
     )
 }
 
-const ProjectList = ({projects}) => {
+const UserProjectList = ({projects}) => {
     console.log(projects)
+    let params = useParams();
+    let uid = params.uid
+    console.log(uid)
+    let filtered_projects = projects.filter((project) => contains(project.users.map((user) => user.uid), uid))
+    console.log(filtered_projects)
     return (
         <table>
-            <caption>Проекты</caption>
+            <caption>Проекты пользователя</caption>
             <thead>
                 <tr>
                     <th>
@@ -35,17 +45,14 @@ const ProjectList = ({projects}) => {
                         Описание
                     </th>
                     <th>
-                        Участники
-                    </th>
-                    <th>
                         URL
                     </th>
                 </tr>
             </thead>
             <tbody>
-                {projects.map((project) => <ProjectItem project={project} key={project.uid}/>)}
+                {filtered_projects.map((project) => <UserProjectItem project={project} key={project.uid}/>)}
             </tbody>
         </table>
     )
 }
-export default ProjectList
+export default UserProjectList

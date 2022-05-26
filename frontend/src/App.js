@@ -5,16 +5,17 @@ import UserList from './components/User.js'
 import axios from 'axios'
 import ProjectList from "./components/Project";
 import TodoList from "./components/todos";
-import {BrowserRouter, Route, Routes, Link, Redirect, Navigate} from "react-router-dom";
+import {BrowserRouter, Route, Routes, Link, Navigate, useParams, useLocation} from "react-router-dom";
+import UserProjectList from "./components/UserProects";
 
-const NotFound404 = ({location}) => {
+const NotFound404 = () => {
     return (
         <div>
-            {/*<h1>Страница `{location.pathname}` не найдена</h1>*/}
-            <h1>Страница не найдена, location в react-router-dom v6 в BrowserRouter не работает </h1>
+            <h1>Страница `{useLocation().pathname}` не найдена</h1>
         </div>
     )
 }
+
 
 class App extends React.Component {
     constructor(props) {
@@ -103,6 +104,7 @@ class App extends React.Component {
                         <Route path='*' element={<NotFound404/>}/>
                         <Route path='/' element={<TodoList todos={this.state.todos}/>}/>
                         <Route path='/users' element={<UserList users={this.state.users}/>}/>
+                        <Route path='/users/:uid' element={<UserProjectList projects={this.state.projects}/>}/>}/>
                         <Route path='/projects' element={<ProjectList projects={this.state.projects}/>}/>
                         <Route path='/todo' element={<Navigate to="/" replace />}/>
                     </Routes>
