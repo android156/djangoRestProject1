@@ -27,12 +27,10 @@ const UserProjectItem = ({project}) => {
 }
 
 const UserProjectList = ({projects}) => {
-    console.log(projects)
     let params = useParams();
     let uid = params.uid
-    console.log(uid)
     let filtered_projects = projects.filter((project) => contains(project.users.map((user) => user.uid), uid))
-    console.log(filtered_projects)
+
     return (
         <table>
             <caption>Проекты пользователя</caption>
