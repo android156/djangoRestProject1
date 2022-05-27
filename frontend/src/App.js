@@ -5,6 +5,16 @@ import UserList from './components/User.js'
 import axios from 'axios'
 import ProjectList from "./components/Project";
 import TodoList from "./components/todos";
+import {BrowserRouter, Route, Routes, Link, Navigate, useParams, useLocation} from "react-router-dom";
+import UserProjectList from "./components/UserProects";
+
+const NotFound404 = () => {
+    return (
+        <div>
+            <h1>Страница `{useLocation().pathname}` не найдена</h1>
+        </div>
+    )
+}
 
 
 class App extends React.Component {
@@ -17,6 +27,7 @@ class App extends React.Component {
 
         }
     }
+
 
     // Заглушка, которая юзеров грузит из списка
 
@@ -45,7 +56,7 @@ class App extends React.Component {
     componentDidMount() {
         axios.get('http://127.0.0.1:8000/api/users/')
             .then(response => {
-                const users = response.data
+                const users = response.data.results
                 this.setState(
                     {
                         'users': users
@@ -54,7 +65,7 @@ class App extends React.Component {
             }).catch(error => console.log(error))
         axios.get('http://127.0.0.1:8000/api/projects/')
             .then(response => {
-                const projects = response.data
+                const projects = response.data.results
                 this.setState(
                     {
                         'projects': projects
@@ -63,7 +74,7 @@ class App extends React.Component {
             }).catch(error => console.log(error))
         axios.get('http://127.0.0.1:8000/api/todo/')
             .then(response => {
-                const todos = response.data
+                const todos = response.data.results
                 this.setState(
                     {
                         'todos': todos
@@ -74,10 +85,31 @@ class App extends React.Component {
 
     render() {
         return (
-            <div>
-                <div><UserList users={this.state.users}/></div>
-                <div><ProjectList projects={this.state.projects}/></div>
-                <div><TodoList todos={this.state.todos}/></div>
+            <div className="App">
+                <BrowserRouter>
+                    <nav>
+                        <ul>
+                            <li>
+                                <Link to='/'>Задания</Link>
+                            </li>
+                            <li>
+                                <Link to='/users'>Пользователи</Link>
+                            </li>
+                            <li>
+                                <Link to='/projects'>Проекты</Link>
+                            </li>
+                        </ul>
+                    </nav>
+                    <Routes>
+                        <Route path='*' element={<NotFound404/>}/>
+                        <Route path='/' element={<TodoList todos={this.state.todos}/>}/>
+                        <Route path='/users' element={<UserList users={this.state.users}/>}/>
+                        <Route path='/users/:uid' element={<UserProjectList projects={this.state.projects}/>}/>}/>
+                        <Route path='/projects' element={<ProjectList projects={this.state.projects}/>}/>
+                        <Route path='/todo' element={<Navigate to="/" replace />}/>
+                    </Routes>
+
+                </BrowserRouter>
             </div>
         )
     }

@@ -24,6 +24,7 @@ router = DefaultRouter()
 router.register('users', AppUserListUpdateViewSet)
 router.register('projects', ProjectLimitOffsetPaginationViewSet)
 router.register('todo', ToDoModelViewSet)
+# router.register('users-for-react', AppUserModelViewSet)
 
 urlpatterns = [
     path('', start_page, name='main'),

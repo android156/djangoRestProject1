@@ -7,14 +7,15 @@ const TodoItem = ({todo}) => {
                 {todo.updated}
             </td>
             <td>
-                {todo.user}
-            </td>
-            <td>
-                {todo.project}
-            </td>
-            <td>
                 {todo.text}
             </td>
+            <td>
+                {todo.user.first_name} {todo.user.last_name}
+            </td>
+            <td>
+                {todo.project.description}
+            </td>
+
         </tr>
     )
 }
@@ -22,19 +23,26 @@ const TodoItem = ({todo}) => {
 const TodoList = ({todos}) => {
     return (
         <table>
-            <th>
-                Date
-            </th>
-            <th>
-                User
-            </th>
-            <th>
-                Project
-            </th>
-            <th>
-                Text
-            </th>
-            {todos.map((todo) => <TodoItem todo={todo}/>)}
+            <caption>Задания</caption>
+            <thead>
+                <tr>
+                    <th>
+                        Дата изменений
+                    </th>
+                    <th>
+                        Задание
+                    </th>
+                    <th>
+                        Исполнитель
+                    </th>
+                    <th>
+                        Проект
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {todos.map((todo) => <TodoItem todo={todo} key={todo.uid}/>)}
+            </tbody>
         </table>
     )
 }

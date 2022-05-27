@@ -1,6 +1,5 @@
 import React from 'react'
-import {Link, useLocation} from "react-router-dom";
-
+import {Link} from "react-router-dom";
 
 const UserItem = ({user}) => {
     return (
@@ -21,15 +20,13 @@ const UserItem = ({user}) => {
                 {user.user_category}
             </td>
             <td>
-                <Link to={`${user.uid}`}>Проекты пользователя</Link>
+                <Link to={`${user.uid}/projects`}>Проекты пользователя</Link>
             </td>
         </tr>
     )
 }
 
 const UserList = ({users}) => {
-    let location = useLocation()
-    console.log(location)
     return (
         <table>
             <caption>Пользователи</caption>
