@@ -17,13 +17,16 @@ class Project(models.Model):
 
 
 class ToDo(models.Model):
+    class Meta:
+        ordering = ['-updated']
+
     uid = models.UUIDField(primary_key=True, default=uuid4)
-    user = models.ForeignKey(AppUser, db_index=True, on_delete=models.CASCADE)
-    project = models.ForeignKey(Project, db_index=True, on_delete=models.CASCADE)
-    text = models.TextField(blank=True)
+    user = models.ForeignKey(AppUser, verbose_name='Пользователь', db_index=True, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, verbose_name='Проект', db_index=True, on_delete=models.CASCADE)
+    text = models.TextField(verbose_name='Текст задания', blank=True)
     created = models.DateTimeField(verbose_name='Задание создано', auto_now_add=True)
     updated = models.DateTimeField(verbose_name='Задание обновлено', auto_now=True)
-    is_active = models.BooleanField(verbose_name='Задание активно', default=True)
+    is_active = models.BooleanField(verbose_name='Задание активно')
 
     def __str__(self):
         return f'{self.text} - Ответственный {self.user.user_name}, Проект {self.project.name}'
