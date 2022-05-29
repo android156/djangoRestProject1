@@ -8,6 +8,7 @@ import TodoList from "./components/Todos";
 import {BrowserRouter, Route, Routes, Link, Navigate, useParams, useLocation} from "react-router-dom";
 import UserProjectList from "./components/UserProects";
 import LoginForm from "./components/Auth";
+import Cookies from 'universal-cookie';
 
 const NotFound404 = () => {
     return (
@@ -25,6 +26,7 @@ class App extends React.Component {
             'users': [],
             'projects': [],
             'todos': [],
+            'token': '',
 
         }
     }
@@ -67,7 +69,30 @@ class App extends React.Component {
         })
             .then(response => {
                 console.log(response.data)
+                console.log('Закинули токен в куку')
+                this.set_token(response.data['token'])
+
             }).catch(error => alert('Неверный логин или пароль'))
+    }
+
+    set_token(token) {
+        const cookies = new Cookies()
+        cookies.set('token', token)
+        this.setState({'token': token})
+    }
+
+    is_authenticated() {
+        return this.state.token != ''
+    }
+
+    logout() {
+        this.set_token('')
+    }
+
+    get_token_from_storage() {
+        const cookies = new Cookies()
+        const token = cookies.get('token')
+        this.setState({'token': token})
     }
 
     // Заглушка, которая юзеров грузит из списка
@@ -95,6 +120,7 @@ class App extends React.Component {
     // }
 
     componentDidMount() {
+        this.get_token_from_storage()
         this.load_data()
     }
 
@@ -114,7 +140,8 @@ class App extends React.Component {
                                 <Link to='/projects'>Проекты</Link>
                             </li>
                             <li>
-                                <Link to='/login'>Войти</Link>
+                                {this.is_authenticated() ? <button
+                                    onClick={() => this.logout()}>Выйти</button> : <Link to='/login'>Войти</Link>}
                             </li>
                         </ul>
                     </nav>
@@ -125,7 +152,8 @@ class App extends React.Component {
                         <Route path='/users/:uid' element={<UserProjectList projects={this.state.projects}/>}/>}/>
                         <Route path='/projects' element={<ProjectList projects={this.state.projects}/>}/>
                         <Route path='/todo' element={<Navigate to="/" replace/>}/>
-                        <Route path='/login' element={<LoginForm get_token={(username, password) => this.get_token(username, password)}/>}/>
+                        <Route path='/login' element={<LoginForm
+                            get_token={(username, password) => this.get_token(username, password)}/>}/>
                     </Routes>
 
                 </BrowserRouter>
