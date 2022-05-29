@@ -1,12 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
 import React from 'react';
-import UserList from './components/User.js'
+import UserList from './components/Users.js'
 import axios from 'axios'
-import ProjectList from "./components/Project";
-import TodoList from "./components/todos";
+import ProjectList from "./components/Projects";
+import TodoList from "./components/Todos";
 import {BrowserRouter, Route, Routes, Link, Navigate, useParams, useLocation} from "react-router-dom";
 import UserProjectList from "./components/UserProects";
+import LoginForm from "./components/Auth";
 
 const NotFound404 = () => {
     return (
@@ -27,33 +28,7 @@ class App extends React.Component {
 
         }
     }
-
-
-    // Заглушка, которая юзеров грузит из списка
-
-    // componentDidMount() {
-    //     const users = [
-    //         {
-    //             'first_name': 'Иван',
-    //             'last_name': 'Коротышкин',
-    //             'user_name': 'korotkiy',
-    //             'email': 'korotkiy@mail.ru',
-    //         },
-    //         {
-    //             'first_name': 'Админ',
-    //             'last_name': 'Админов',
-    //             'user_name': 'admin',
-    //             'email': 'admin@mail.ru',
-    //         },
-    //     ]
-    //     this.setState(
-    //         {
-    //             'users': users
-    //             }
-    //     )
-    // }
-
-    componentDidMount() {
+load_data () {
         axios.get('http://127.0.0.1:8000/api/users/')
             .then(response => {
                 const users = response.data.results
@@ -81,6 +56,34 @@ class App extends React.Component {
                     }
                 )
             }).catch(error => console.log(error))
+}
+
+    // Заглушка, которая юзеров грузит из списка
+
+    // componentDidMount() {
+    //     const users = [
+    //         {
+    //             'first_name': 'Иван',
+    //             'last_name': 'Коротышкин',
+    //             'user_name': 'korotkiy',
+    //             'email': 'korotkiy@mail.ru',
+    //         },
+    //         {
+    //             'first_name': 'Админ',
+    //             'last_name': 'Админов',
+    //             'user_name': 'admin',
+    //             'email': 'admin@mail.ru',
+    //         },
+    //     ]
+    //     this.setState(
+    //         {
+    //             'users': users
+    //             }
+    //     )
+    // }
+
+    componentDidMount() {
+        this.load_data()
     }
 
     render() {
@@ -98,6 +101,9 @@ class App extends React.Component {
                             <li>
                                 <Link to='/projects'>Проекты</Link>
                             </li>
+                            <li>
+                                <Link to='/login'>Войти</Link>
+                            </li>
                         </ul>
                     </nav>
                     <Routes>
@@ -107,6 +113,7 @@ class App extends React.Component {
                         <Route path='/users/:uid' element={<UserProjectList projects={this.state.projects}/>}/>}/>
                         <Route path='/projects' element={<ProjectList projects={this.state.projects}/>}/>
                         <Route path='/todo' element={<Navigate to="/" replace />}/>
+                        <Route path='/login' element={<LoginForm/>}/>
                     </Routes>
 
                 </BrowserRouter>
