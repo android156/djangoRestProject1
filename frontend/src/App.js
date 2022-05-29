@@ -28,7 +28,8 @@ class App extends React.Component {
 
         }
     }
-load_data () {
+
+    load_data() {
         axios.get('http://127.0.0.1:8000/api/users/')
             .then(response => {
                 const users = response.data.results
@@ -56,7 +57,18 @@ load_data () {
                     }
                 )
             }).catch(error => console.log(error))
-}
+    }
+
+    get_token(username, password) {
+        console.log('Запуск get_token')
+        axios.post('http://127.0.0.1:8000/api-token-auth/', {
+            username: username,
+            password: password
+        })
+            .then(response => {
+                console.log(response.data)
+            }).catch(error => alert('Неверный логин или пароль'))
+    }
 
     // Заглушка, которая юзеров грузит из списка
 
@@ -112,8 +124,8 @@ load_data () {
                         <Route path='/users' element={<UserList users={this.state.users}/>}/>
                         <Route path='/users/:uid' element={<UserProjectList projects={this.state.projects}/>}/>}/>
                         <Route path='/projects' element={<ProjectList projects={this.state.projects}/>}/>
-                        <Route path='/todo' element={<Navigate to="/" replace />}/>
-                        <Route path='/login' element={<LoginForm/>}/>
+                        <Route path='/todo' element={<Navigate to="/" replace/>}/>
+                        <Route path='/login' element={<LoginForm get_token={(username, password) => this.get_token(username, password)}/>}/>
                     </Routes>
 
                 </BrowserRouter>
