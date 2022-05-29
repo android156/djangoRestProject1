@@ -32,7 +32,8 @@ class App extends React.Component {
     }
 
     load_data() {
-        axios.get('http://127.0.0.1:8000/api/users/')
+        const headers = this.get_headers()
+        axios.get('http://127.0.0.1:8000/api/users/', {headers})
             .then(response => {
                 const users = response.data.results
                 this.setState(
@@ -40,8 +41,11 @@ class App extends React.Component {
                         'users': users
                     }
                 )
-            }).catch(error => console.log(error))
-        axios.get('http://127.0.0.1:8000/api/projects/')
+            }).catch(error => {
+                console.log(error)
+                this.setState({'users': []})
+            })
+        axios.get('http://127.0.0.1:8000/api/projects/', {headers})
             .then(response => {
                 const projects = response.data.results
                 this.setState(
@@ -49,8 +53,11 @@ class App extends React.Component {
                         'projects': projects
                     }
                 )
-            }).catch(error => console.log(error))
-        axios.get('http://127.0.0.1:8000/api/todo/')
+            }).catch(error => {
+                console.log(error)
+                this.setState({'projects': []})
+            })
+        axios.get('http://127.0.0.1:8000/api/todo/', {headers})
             .then(response => {
                 const todos = response.data.results
                 this.setState(
@@ -58,7 +65,10 @@ class App extends React.Component {
                         'todos': todos
                     }
                 )
-            }).catch(error => console.log(error))
+            }).catch(error => {
+                console.log(error)
+                this.setState({'todos': []})
+            })
     }
 
     get_token(username, password) {
@@ -78,7 +88,7 @@ class App extends React.Component {
     set_token(token) {
         const cookies = new Cookies()
         cookies.set('token', token)
-        this.setState({'token': token})
+        this.setState({'token': token}, ()=>this.load_data())
     }
 
     is_authenticated() {
@@ -92,7 +102,17 @@ class App extends React.Component {
     get_token_from_storage() {
         const cookies = new Cookies()
         const token = cookies.get('token')
-        this.setState({'token': token})
+        this.setState({'token': token}, ()=>this.load_data())
+    }
+
+    get_headers() {
+        let headers = {
+            'Content-Type': 'application/json'
+        }
+        if (this.is_authenticated()) {
+            headers['Authorization'] = 'Token ' + this.state.token
+        }
+        return headers
     }
 
     // Заглушка, которая юзеров грузит из списка
@@ -121,7 +141,6 @@ class App extends React.Component {
 
     componentDidMount() {
         this.get_token_from_storage()
-        this.load_data()
     }
 
     render() {

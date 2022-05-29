@@ -4,7 +4,7 @@ from django.shortcuts import render
 from rest_framework import status
 from rest_framework.generics import CreateAPIView
 from rest_framework.pagination import LimitOffsetPagination
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -24,8 +24,8 @@ class ProjectModelViewSet(ModelViewSet):
     serializer_class = ProjectModelSerializerAll
 
 
-
 class ToDoModelViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated, ]
     queryset = ToDo.objects.all()
     serializer_class = ToDoModelSerializer
     filterset_class = ToDoFilter
@@ -43,8 +43,6 @@ class ToDoModelViewSet(ModelViewSet):
     def perform_destroy(self, instance):
         instance.is_active = False
         instance.save()
-
-
 
 
 class MyApiView(APIView):
@@ -71,6 +69,7 @@ class ProjectLimitOffsetPagination(LimitOffsetPagination):
 
 
 class ProjectLimitOffsetPaginationViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated, ]
     queryset = Project.objects.all()
     serializer_class = ProjectModelSerializerAll
     pagination_class = ProjectLimitOffsetPagination
