@@ -1,12 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
 import React from 'react';
-import UserList from './components/User.js'
+import UserList from './components/Users.js'
 import axios from 'axios'
-import ProjectList from "./components/Project";
-import TodoList from "./components/todos";
+import ProjectList from "./components/Projects";
+import TodoList from "./components/Todos";
 import {BrowserRouter, Route, Routes, Link, Navigate, useParams, useLocation} from "react-router-dom";
 import UserProjectList from "./components/UserProects";
+import LoginForm from "./components/Auth";
+import Cookies from 'universal-cookie';
 
 const NotFound404 = () => {
     return (
@@ -24,10 +26,94 @@ class App extends React.Component {
             'users': [],
             'projects': [],
             'todos': [],
+            'token': '',
 
         }
     }
 
+    load_data() {
+        const headers = this.get_headers()
+        axios.get('http://127.0.0.1:8000/api/users/', {headers})
+            .then(response => {
+                const users = response.data.results
+                this.setState(
+                    {
+                        'users': users
+                    }
+                )
+            }).catch(error => {
+                console.log(error)
+                this.setState({'users': []})
+            })
+        axios.get('http://127.0.0.1:8000/api/projects/', {headers})
+            .then(response => {
+                const projects = response.data.results
+                this.setState(
+                    {
+                        'projects': projects
+                    }
+                )
+            }).catch(error => {
+                console.log(error)
+                this.setState({'projects': []})
+            })
+        axios.get('http://127.0.0.1:8000/api/todo/', {headers})
+            .then(response => {
+                const todos = response.data.results
+                this.setState(
+                    {
+                        'todos': todos
+                    }
+                )
+            }).catch(error => {
+                console.log(error)
+                this.setState({'todos': []})
+            })
+    }
+
+    get_token(username, password) {
+        console.log('Запуск get_token')
+        axios.post('http://127.0.0.1:8000/api-token-auth/', {
+            username: username,
+            password: password
+        })
+            .then(response => {
+                console.log(response.data)
+                console.log('Закинули токен в куку')
+                this.set_token(response.data['token'])
+
+            }).catch(error => alert('Неверный логин или пароль'))
+    }
+
+    set_token(token) {
+        const cookies = new Cookies()
+        cookies.set('token', token)
+        this.setState({'token': token}, ()=>this.load_data())
+    }
+
+    is_authenticated() {
+        return this.state.token != ''
+    }
+
+    logout() {
+        this.set_token('')
+    }
+
+    get_token_from_storage() {
+        const cookies = new Cookies()
+        const token = cookies.get('token')
+        this.setState({'token': token}, ()=>this.load_data())
+    }
+
+    get_headers() {
+        let headers = {
+            'Content-Type': 'application/json'
+        }
+        if (this.is_authenticated()) {
+            headers['Authorization'] = 'Token ' + this.state.token
+        }
+        return headers
+    }
 
     // Заглушка, которая юзеров грузит из списка
 
@@ -54,33 +140,7 @@ class App extends React.Component {
     // }
 
     componentDidMount() {
-        axios.get('http://127.0.0.1:8000/api/users/')
-            .then(response => {
-                const users = response.data.results
-                this.setState(
-                    {
-                        'users': users
-                    }
-                )
-            }).catch(error => console.log(error))
-        axios.get('http://127.0.0.1:8000/api/projects/')
-            .then(response => {
-                const projects = response.data.results
-                this.setState(
-                    {
-                        'projects': projects
-                    }
-                )
-            }).catch(error => console.log(error))
-        axios.get('http://127.0.0.1:8000/api/todo/')
-            .then(response => {
-                const todos = response.data.results
-                this.setState(
-                    {
-                        'todos': todos
-                    }
-                )
-            }).catch(error => console.log(error))
+        this.get_token_from_storage()
     }
 
     render() {
@@ -98,6 +158,10 @@ class App extends React.Component {
                             <li>
                                 <Link to='/projects'>Проекты</Link>
                             </li>
+                            <li>
+                                {this.is_authenticated() ? <button
+                                    onClick={() => this.logout()}>Выйти</button> : <Link to='/login'>Войти</Link>}
+                            </li>
                         </ul>
                     </nav>
                     <Routes>
@@ -106,7 +170,9 @@ class App extends React.Component {
                         <Route path='/users' element={<UserList users={this.state.users}/>}/>
                         <Route path='/users/:uid' element={<UserProjectList projects={this.state.projects}/>}/>}/>
                         <Route path='/projects' element={<ProjectList projects={this.state.projects}/>}/>
-                        <Route path='/todo' element={<Navigate to="/" replace />}/>
+                        <Route path='/todo' element={<Navigate to="/" replace/>}/>
+                        <Route path='/login' element={<LoginForm
+                            get_token={(username, password) => this.get_token(username, password)}/>}/>
                     </Routes>
 
                 </BrowserRouter>
