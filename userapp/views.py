@@ -4,8 +4,7 @@ from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
 from rest_framework.viewsets import ModelViewSet
 from .models import AppUser
 from .serializers import UserModelSerializerAll
-from rest_framework.permissions import IsAuthenticated
-
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, AllowAny
 
 data = {
     'title': '',
@@ -15,14 +14,14 @@ data = {
 
 
 class AppUserModelViewSet(ModelViewSet):
-
+    permission_classes = [IsAuthenticatedOrReadOnly, ]
     queryset = AppUser.objects.all()
     serializer_class = UserModelSerializerAll
 
 
-class AppUserListUpdateViewSet(mixins.UpdateModelMixin, mixins.ListModelMixin, mixins.RetrieveModelMixin,
+class AppUserListUpdateViewSet(mixins.UpdateModelMixin, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin,
                                viewsets.GenericViewSet):
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [IsAuthenticatedOrReadOnly, ]
     queryset = AppUser.objects.all()
     serializer_class = UserModelSerializerAll
 
