@@ -28,8 +28,6 @@ const UserItem = ({user}) => {
 }
 
 const UserList = ({users}) => {
-    let location = useLocation()
-    console.log(location)
     return (
         <table>
             <caption>Пользователи</caption>

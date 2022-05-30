@@ -22,7 +22,6 @@ const ProjectItem = ({project}) => {
 }
 
 const ProjectList = ({projects}) => {
-    console.log(projects)
     return (
         <table>
             <caption>Проекты</caption>
