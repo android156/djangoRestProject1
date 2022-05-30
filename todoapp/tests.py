@@ -6,7 +6,8 @@ from rest_framework.test import APIRequestFactory, force_authenticate, APIClient
 from mixer.backend.django import mixer
 from django.contrib.auth.models import User
 from .views import ToDoModelViewSet, ProjectModelViewSet
-from .models import Project, ToDo
+from userapp.views import AppUserModelViewSet
+from userapp.models import AppUser
 from django.contrib.auth.models import User
 
 
@@ -19,3 +20,34 @@ class TestProjectViewSet(TestCase):
         response = view(request)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+    def test_create_guest(self):
+        factory = APIRequestFactory()
+        request = factory.post('/api/users/',
+                               {
+                                   'first_name': 'Юра',
+                                   'last_name': 'Лужков',
+                                   'user_name': 'luzhok',
+                                   'email': 'luzhok@moscow.ru',
+                                   'user_category': AppUser.MANAGER_STATUS,
+                               }, format='json')
+        view = AppUserModelViewSet.as_view({'post': 'create'})
+        response = view(request)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_create_admin(self):
+        factory = APIRequestFactory()
+
+        request = factory.post('/api/users/',
+                               {
+                                   'first_name': 'Юра',
+                                   'last_name': 'Лужков',
+                                   'user_name': 'luzhok',
+                                   'email': 'luzhok@moscow.ru',
+                                   'user_category': AppUser.MANAGER_STATUS,
+                               }, format='json')
+        admin = User.objects.create_superuser('admin16', 'admin@admin.com',
+                                              'admin123456')
+        force_authenticate(request, admin)
+        view = AppUserModelViewSet.as_view({'post': 'create'})
+        response = view(request)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
