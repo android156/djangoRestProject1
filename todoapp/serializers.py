@@ -4,6 +4,14 @@ from userapp.serializers import UserModelSerializerForToDo, UserModelSerializerF
 from .models import Project, ToDo
 
 
+# Для всех запросов, кроме get
+class ProjectModelSerializerBaseAll(ModelSerializer):
+    class Meta:
+        model = Project
+        fields = '__all__'
+
+
+# Для get запросов
 class ProjectModelSerializerAll(ModelSerializer):
     users = UserModelSerializerForProject(many=True)
 
@@ -11,7 +19,7 @@ class ProjectModelSerializerAll(ModelSerializer):
         model = Project
         fields = '__all__'
 
-
+# Для запросов списка заданий
 class ProjectModelSerializerForToDo(HyperlinkedModelSerializer):
 
     class Meta:
@@ -39,6 +47,13 @@ class ToDoModelSerializer(ModelSerializer):
 class ToDoModelSerializerForApiView(ModelSerializer):
     user = UserModelSerializerForToDo()
     project = ProjectModelSerializerForToDo()
+
+    class Meta:
+        model = ToDo
+        fields = '__all__'
+
+
+class ToDoModelSerializerBase(ModelSerializer):
 
     class Meta:
         model = ToDo

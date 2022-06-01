@@ -27,7 +27,7 @@ class AppUser(models.Model):
     last_name = models.CharField(max_length=64)
     user_name = models.CharField(max_length=64, unique=True)
     email = models.EmailField(max_length=64, unique=True)
-    user_category = models.CharField(max_length=1, choices=CATEGORY_CHOICES, blank=True)
+    user_category = models.CharField(max_length=1, choices=CATEGORY_CHOICES, blank=True, default=MANAGER_STATUS)
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name} {self.user_name} - {self.status_name_dict[self.user_category]}'
+        return f'Имя Фамилия: {self.first_name} {self.last_name}, Ник: {self.user_name} - {self.status_name_dict[self.user_category]}'

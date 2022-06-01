@@ -13,7 +13,7 @@ class Project(models.Model):
     users = models.ManyToManyField(AppUser, blank=True)
 
     def __str__(self):
-        return f'{self.name} - {self.description}'
+        return f'\nНазвание проекта: {self.name}\nОписание проекта: {self.description}'
 
 
 class ToDo(models.Model):
@@ -26,7 +26,7 @@ class ToDo(models.Model):
     text = models.TextField(verbose_name='Текст задания', blank=True)
     created = models.DateTimeField(verbose_name='Задание создано', auto_now_add=True)
     updated = models.DateTimeField(verbose_name='Задание обновлено', auto_now=True)
-    is_active = models.BooleanField(verbose_name='Задание активно')
+    is_active = models.BooleanField(verbose_name='Задание активно', default=True)
 
     def __str__(self):
-        return f'{self.text} - Ответственный {self.user.user_name}, Проект {self.project.name}'
+        return f'\nТекст задания: {self.text} \nОтветственный: {self.user.user_name}, \nПроект: {self.project.name}'

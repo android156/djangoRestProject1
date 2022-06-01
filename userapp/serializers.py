@@ -8,14 +8,14 @@ class UserModelSerializerAll(ModelSerializer):
         fields = '__all__'
 
 
-class UserModelSerializerForToDo(HyperlinkedModelSerializer):
+class UserModelSerializerForToDo(ModelSerializer):
     class Meta:
         model = AppUser
         # fields = '__all__'
         fields = ['first_name', 'last_name']
 
 
-class UserModelSerializerForProject(HyperlinkedModelSerializer):
+class UserModelSerializerForProject(ModelSerializer):
     class Meta:
         model = AppUser
         # fields = '__all__'

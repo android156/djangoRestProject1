@@ -58,8 +58,27 @@ class TestProjectViewSet2(APITestCase):
                                       email='luzhok@moscow.ru', user_category=AppUser.MANAGER_STATUS)
         user2 = AppUser.objects.create(first_name='Василий', last_name='Блаженный', user_name='crazy_vasya',
                                        email='crazyV@moscow.ru')
-        project = Project.objects.create(name='Стройка века в Москве')
+        project = Project.objects.create(name='Стройка века в Москве',)
+
+
+        print(user)
+        print(user2)
+        print(project)
+        # Так не работает
         project.users.add(user)
+        print(project.users)
+
+        # Так тоже не работает
+        project.users.create(first_name='Саня', last_name='Копытин', user_name='kopyto',
+                                       email='sanya_kopyto@mail.ru')
+
+        print(project.users)
+        # И так тоже не работает
+        user2.project_set.add(project)
+        print(project.users)
+
+        # Юзеров хрен в проект добавишь, проклятие ManyToManyField
+
         todo = ToDo.objects.create(text='Построить 1-ую башню Кремля', project=project, user=user)
         admin = User.objects.create_superuser('admin156', 'admin@admin.com', 'admin123456')
         self.client.login(username='admin156', password='admin123456')
