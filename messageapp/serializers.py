@@ -7,4 +7,14 @@ class MessageModelSerializer(ModelSerializer):
 
     class Meta:
         model = Message
+        # fields = '__all__'
+        exclude = ('updated', 'sent')
+
+
+class MessageModelSerializerAll(ModelSerializer):
+    class Meta:
+        model = Message
+        # fields = '__all__'
         fields = '__all__'
+
+
