@@ -13,8 +13,8 @@ class MessageModelViewSet(ModelViewSet):
 
     def get_serializer_class(self):
         # if self.request.version == '0.2':   # namespacing
-        if self.request.version == '2.0':   # namespacing
-        # if self.request.method in ['GET']:
+        # if self.request.version == '2.0':   # namespacing
+        if self.request.method in ['GET'] and self.request.version == '2.0.0':
             return MessageModelSerializerAll
         return MessageModelSerializer
 
