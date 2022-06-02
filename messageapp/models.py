@@ -15,4 +15,4 @@ class Message(models.Model):
                                         db_index=True, blank=True)
     created = models.DateTimeField(verbose_name='Задание создано', auto_now_add=True)
     updated = models.DateTimeField(verbose_name='Задание обновлено', auto_now=True)
-    sent = models.DateTimeField(verbose_name='Отправлено', blank=True)
+    sent = models.DateTimeField(verbose_name='Отправлено', blank=True, null=True)
