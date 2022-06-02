@@ -18,6 +18,7 @@ from django.urls import path, include
 from rest_framework.authtoken import views
 from rest_framework.routers import DefaultRouter
 
+from messageapp.views import MessageModelViewSet
 from todoapp.views import ToDoModelViewSet, ProjectModelViewSet, MyApiView, ProjectLimitOffsetPaginationViewSet
 from userapp.views import AppUserModelViewSet, start_page, AppUserListUpdateViewSet
 
@@ -25,6 +26,7 @@ router = DefaultRouter()
 router.register('users', AppUserListUpdateViewSet)
 router.register('projects', ProjectLimitOffsetPaginationViewSet)
 router.register('todo', ToDoModelViewSet)
+router.register('messages', MessageModelViewSet)
 # router.register('users-for-react', AppUserModelViewSet)
 
 urlpatterns = [

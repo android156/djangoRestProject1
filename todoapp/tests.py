@@ -65,16 +65,19 @@ class TestProjectViewSet2(APITestCase):
         print(user2)
         print(project)
         # Так не работает
+
         project.users.add(user)
+        project.save()
         print(project.users)
 
         # Так тоже не работает
         project.users.create(first_name='Саня', last_name='Копытин', user_name='kopyto',
                                        email='sanya_kopyto@mail.ru')
-
+        project.save()
         print(project.users)
         # И так тоже не работает
         user2.project_set.add(project)
+        project.save()
         print(project.users)
 
         # Юзеров хрен в проект добавишь, проклятие ManyToManyField

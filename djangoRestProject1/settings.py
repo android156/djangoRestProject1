@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     'userapp',
     'todoapp',
+    'messageapp'
 ]
 
 MIDDLEWARE = [
