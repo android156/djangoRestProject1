@@ -36,6 +36,9 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api-view/', MyApiView.as_view(), name='api-view'),
     path('api-token-auth/', views.obtain_auth_token),
+    path('api/messages-v/1.0', include('messageapp.urls', namespace='1.0')),
+    path('api/messages-v/2.0', include('messageapp.urls', namespace='2.0')),
+
     re_path(r'^api/(?P<version>\d\.\d)/messages-v/$', MessageModelViewSet.as_view({'get': 'list'}))
 
 ]
