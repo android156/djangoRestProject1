@@ -37,14 +37,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
-    'corsheaders',
+    'corsheaders',  # CORS защита
 
     'django_filters',
-    'rest_framework.authtoken',
+    'rest_framework.authtoken', # авторизация по токену
 
     'userapp',
     'todoapp',
-    'messageapp'
+    'messageapp',
+
+    'drf_yasg', # for swagger - scheme OpenAPI
 ]
 
 MIDDLEWARE = [
