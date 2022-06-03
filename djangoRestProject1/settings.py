@@ -37,13 +37,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
-    'corsheaders',
+    'corsheaders',  # CORS защита
 
     'django_filters',
-    'rest_framework.authtoken',
+    'rest_framework.authtoken', # авторизация по токену
 
     'userapp',
     'todoapp',
+    'messageapp',
+
+    'drf_yasg', # for swagger - scheme OpenAPI
 ]
 
 MIDDLEWARE = [
@@ -139,6 +142,12 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.BrowsableAPIRenderer',
         'rest_framework.renderers.AdminRenderer',
     ],
+    # 'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
+    # 'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
+    # 'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.QueryParameterVersioning',
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.AcceptHeaderVersioning',
+
+
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     # 'PAGE_SIZE': 100,
     # 'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
