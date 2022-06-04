@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, re_path
+
+from graphene_django.views import GraphQLView
 from rest_framework import permissions
 from rest_framework.authtoken import views
 from rest_framework.routers import DefaultRouter
@@ -53,6 +55,9 @@ urlpatterns = [
     path('api-token-auth/', views.obtain_auth_token),
     path('api/messages-v/1.0', include('messageapp.urls', namespace='1.0')),  # NamespaceVersioning
     path('api/messages-v/2.0', include('messageapp.urls', namespace='2.0')),  # NamespaceVersioning
+
+
+    path('graphql/', GraphQLView.as_view(graphiql=True)),
 
     re_path(r'^swagger(?P<format>\.json|\.yaml)$',  # шаблон через регулярку
             schema_view.without_ui(cache_timeout=0), name='schema-json'),

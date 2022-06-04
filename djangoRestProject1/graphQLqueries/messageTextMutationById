@@ -1,0 +1,9 @@
+mutation MessageTextMutationByUid {
+  updateMessage(text: "123", messageUid:"76d84bf9-9f75-406e-97c8-43b0eebf2ff3") {
+  message {
+    uid
+    text
+    updated
+  }
+  }
+}

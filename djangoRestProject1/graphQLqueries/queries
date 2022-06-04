@@ -1,0 +1,38 @@
+{
+  Users_projects : allUsers {
+    firstName
+    lastName
+    userName
+    projectSet {
+      name
+    }
+  }
+  Users_messages : allUsers {
+    firstName
+    lastName
+    userSender {
+      text
+    }
+  }
+  allMessages {
+    text
+    sender {
+      firstName
+      lastName
+    	}
+    recipients {
+      firstName
+      lastName
+    }
+	}
+  userByUsername(username: "bigboss") {
+    firstName
+	}
+  messagesBySenderUsername(username: "sobyasha"){
+    text
+  }
+  allMessagesTexts: messagesBySenderUsername(username: ""){
+    uid
+    text
+  }
+}
