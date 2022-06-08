@@ -1,6 +1,6 @@
 import React from 'react'
 
-const TodoItem = ({todo}) => {
+const TodoItem = ({todo, deleteTodo}) => {
     return (
         <tr>
             <td>
@@ -25,7 +25,7 @@ const TodoItem = ({todo}) => {
     )
 }
 
-const TodoList = ({todos}) => {
+const TodoList = ({todos, deleteTodo}) => {
     return (
         <table>
             <caption>Задания</caption>

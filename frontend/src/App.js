@@ -5,7 +5,7 @@ import UserList from './components/Users.js'
 import axios from 'axios'
 import ProjectList from "./components/Projects";
 import TodoList from "./components/Todos";
-import {BrowserRouter, Route, Routes, Link, Navigate, useParams, useLocation} from "react-router-dom";
+import {BrowserRouter, Route, Routes, Link, Navigate, useLocation} from "react-router-dom";
 import UserProjectList from "./components/UserProects";
 import LoginForm from "./components/Auth";
 import Cookies from 'universal-cookie';
@@ -92,7 +92,7 @@ class App extends React.Component {
     }
 
     is_authenticated() {
-        return this.state.token != ''
+        return this.state.token !== ''
     }
 
     logout() {
@@ -117,10 +117,10 @@ class App extends React.Component {
 
     deleteTodo(uid) {
         const headers = this.get_headers()
-        axios.delete(`http://127.0.0.1:8000/api/todo/${uid}`, {headers})
+        axios.delete(`http://127.0.0.1:8000/api/todo/${uid}/`, {headers})
             .then(response => {
                 this.setState({
-                    todos: this.state.todos.filter((item) => item.uid !== uid)
+                    todos: this.state.todos.filter((todo) => todo.uid !== uid)
                 })
             }).catch(error => console.log(error))
     }

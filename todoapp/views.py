@@ -23,7 +23,7 @@ class ProjectModelViewSet(ModelViewSet):
 
 class ToDoModelViewSet(ModelViewSet):
     # permission_classes = [IsAuthenticated, ]
-    queryset = ToDo.objects.all()
+    queryset = ToDo.objects.filter(is_active=True)
     serializer_class = ToDoModelSerializer
     # filterset_class = ToDoFilter
 
