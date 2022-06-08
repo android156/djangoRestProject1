@@ -15,7 +15,12 @@ const TodoItem = ({todo}) => {
             <td>
                 {todo.project.description}
             </td>
-
+            <td>
+                {todo.project.description}
+            </td>
+            <td>
+                <button onClick={() => deleteTodo(todo.uid)} type='button'>Delete</button>
+            </td>
         </tr>
     )
 }
@@ -25,23 +30,25 @@ const TodoList = ({todos}) => {
         <table>
             <caption>Задания</caption>
             <thead>
-                <tr>
-                    <th>
-                        Дата изменений
-                    </th>
-                    <th>
-                        Задание
-                    </th>
-                    <th>
-                        Исполнитель
-                    </th>
-                    <th>
-                        Проект
-                    </th>
-                </tr>
+            <tr>
+                <th>
+                    Дата изменений
+                </th>
+                <th>
+                    Задание
+                </th>
+                <th>
+                    Исполнитель
+                </th>
+                <th>
+                    Проект
+                </th>
+                <th>
+                </th>
+            </tr>
             </thead>
             <tbody>
-                {todos.map((todo) => <TodoItem todo={todo} key={todo.uid}/>)}
+            {todos.map((todo) => <TodoItem todo={todo} key={todo.uid} deleteTodo={deleteTodo}/>)}
             </tbody>
         </table>
     )
