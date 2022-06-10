@@ -9,6 +9,7 @@ import {BrowserRouter, Route, Routes, Link, Navigate, useLocation} from "react-r
 import UserProjectList from "./components/UserProects";
 import LoginForm from "./components/Auth";
 import Cookies from 'universal-cookie';
+import TodoForm from "./components/TodoForm";
 
 const NotFound404 = () => {
     return (
@@ -125,6 +126,21 @@ class App extends React.Component {
             }).catch(error => console.log(error))
     }
 
+
+    createTodo(text, user, project) {
+        const headers = this.get_headers()
+        const data = {text: text, user: user, project: project}
+        axios.post(`http://127.0.0.1:8000/api/todo/`, data, {headers})
+            .then(response => {
+                let new_todo = response.data
+                const user = this.state.users.filter((user) => user.uid === new_todo.user)[0]
+                const project = this.state.projects.filter((project) => project.uid === new_todo.project)[0]
+                new_todo.user = user
+                new_todo.project = project
+                this.setState({todos: [...this.state.todos, new_todo]})
+            }).catch(error => console.log(error))
+    }
+
     // Заглушка, которая юзеров грузит из списка
 
     // componentDidMount() {
@@ -178,6 +194,8 @@ class App extends React.Component {
                         <Route path='*' element={<NotFound404/>}/>
                         <Route path='/' element={<TodoList todos={this.state.todos}
                                                            deleteTodo={(uid) => this.deleteTodo(uid)}/>}/>
+                        <Route path='/create' element={<TodoForm users={this.state.users} projects={this.state.projects}
+                                                                 createTodo={(text, user, project) => this.createTodo(text, user, project)}/>}/>
                         <Route path='/users' element={<UserList users={this.state.users}/>}/>
                         <Route path='/users/:uid' element={<UserProjectList projects={this.state.projects}/>}/>}/>
                         <Route path='/projects' element={<ProjectList projects={this.state.projects}/>}/>
