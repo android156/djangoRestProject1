@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-7a453iyi&^iqh&!54=09ttioc49d!iwgwbynfh@il4p=qil_(8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 
 
@@ -70,6 +70,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:80",
     "http://127.0.0.1:8000",
     "http://127.0.0.1:8080",
+    "http://134.0.115.241:80",
 ]
 
 ROOT_URLCONF = 'djangoRestProject1.urls'
