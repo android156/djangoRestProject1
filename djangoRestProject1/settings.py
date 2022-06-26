@@ -71,6 +71,9 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:8000",
     "http://127.0.0.1:8080",
     "http://134.0.115.241:80",
+    "http://134.0.115.241:8000",
+    "http://127.0.0.1:8000",
+    
 ]
 
 ROOT_URLCONF = 'djangoRestProject1.urls'
