@@ -151,8 +151,14 @@ STATIC_URL = 'static/'
 
 STATICFILES_DIRS = (
     BASE_DIR / 'static/',
+    os.path.join(BASE_DIR, "djangoRestProject1", "static"),
 )
 
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+
+]
 
 #STATIC_ROOT = path.join(BASE_DIR, 'static')
 
