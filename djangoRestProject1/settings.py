@@ -151,8 +151,7 @@ STATIC_URL = 'static/'
 
 STATICFILES_DIRS = (
     BASE_DIR / 'static/',
-    path.join(BASE_DIR, "djangoRestProject1", "static"),
-)
+    )
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
